@@ -14,7 +14,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openmrs</groupId>
 	<artifactId>openmrs</artifactId>
-	<version>2.4.2</version>
+	<version>2.4.2.1</version>
 	<packaging>pom</packaging>
 	<name>OpenMRS</name>
 	<description>Master project for the modules of OpenMRS</description>
@@ -36,13 +36,13 @@
 		<name>OpenMRS Inc.</name>
 		<url>http://openmrs.org</url>
 	</organization>
-
-	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-core</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-core</developerConnection>
-		<url>https://github.com/openmrs/openmrs-core</url>
-	  <tag>2.4.2</tag>
-  </scm>
+  
+    <scm>
+        <connection>scm:git:git@github.iu.edu:CHIRDL/custom_openmrs_2_4_x.git</connection>
+        <developerConnection>scm:git:git@github.iu.edu:CHIRDL/custom_openmrs_2_4_x.git</developerConnection>
+        <url>https://github.iu.edu/CHIRDL/custom_openmrs_2_4_x</url>
+        <tag>HEAD</tag>
+    </scm>
 
 	<ciManagement>
 		<system>Bamboo</system>
@@ -1094,14 +1094,14 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<repositories>
-		<repository>
-			<id>openmrs-repo</id>
-			<name>OpenMRS Nexus Repository</name>
-			<url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
-		</repository>
-	</repositories>
+    
+    <repositories>
+        <repository>
+            <id>chirdl-repo</id>
+            <name>CHIRDL Nexus Repository</name>
+            <url>https://iu-ota-icechip.ads.iu.edu:8091/repository/maven-public/</url>
+        </repository>
+    </repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -1113,19 +1113,19 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
-	<distributionManagement>
-		<repository>
-			<id>openmrs-repo-releases</id>
-			<name>OpenMRS Nexus Releases</name>
-			<url>https://mavenrepo.openmrs.org/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>openmrs-repo-snapshots</id>
-			<name>OpenMRS Nexus Snapshots</name>
-			<url>https://mavenrepo.openmrs.org/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+    
+    <distributionManagement>
+        <repository>
+            <id>chirdl-repo-releases</id>
+            <name>CHIRDL Nexus Releases</name>
+            <url>https://iu-ota-icechip.ads.iu.edu:8091/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>chirdl-repo-snapshots</id>
+            <name>CHIRDL Nexus Snapshots</name>
+            <url>https://iu-ota-icechip.ads.iu.edu:8091/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
