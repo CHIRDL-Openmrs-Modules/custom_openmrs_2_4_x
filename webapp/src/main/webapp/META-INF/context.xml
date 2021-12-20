@@ -62,4 +62,5 @@
         factory="org.activemq.jndi.JNDIReferenceFactory"
         physicalName="FOO.BAR"/>
 -->
+    <CookieProcessor sameSiteCookies="none" />
 </Context>

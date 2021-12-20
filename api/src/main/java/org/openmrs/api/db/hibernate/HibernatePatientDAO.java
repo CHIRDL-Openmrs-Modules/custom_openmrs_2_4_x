@@ -995,4 +995,23 @@ public class HibernatePatientDAO implements PatientDAO {
     	sessionFactory.getCurrentSession().save(allergy);
     	return allergy;
     }
+    
+    /**
+     * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This method contains the original code from version 1.7.x
+	 * @see org.openmrs.api.db.PatientDAO#getPatientsByIdentifier(String, String, List, boolean)
+	 */
+    @Override
+	public List<Patient> getPatientsByIdentifier(String name, String identifier,
+	        List<PatientIdentifierType> identifierTypes, boolean matchIdentifierExactly) throws DAOException {
+
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Patient.class);
+		criteria = new PatientSearchCriteria(sessionFactory, criteria).prepareCriteria(name, identifier, identifierTypes,
+		    matchIdentifierExactly);
+		// restricting the search to the max search results value
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(HibernatePersonDAO.getMaximumSearchResults());
+
+		return criteria.list();
+	}
 }

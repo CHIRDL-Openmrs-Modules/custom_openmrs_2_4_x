@@ -16,8 +16,9 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.openmrs.util.OpenmrsUtil;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * This class is the representation of a person's address. This class is many-to-one to the Person

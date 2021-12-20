@@ -350,11 +350,21 @@
 				<artifactId>hapi-base</artifactId>
 				<version>2.1</version>
 			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi</groupId>
+                <artifactId>hapi-structures-v22</artifactId>
+                <version>2.1</version>
+            </dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v23</artifactId>
 				<version>2.1</version>
 			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi</groupId>
+                <artifactId>hapi-structures-v231</artifactId>
+                <version>2.1</version>
+            </dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v24</artifactId>
@@ -388,7 +398,7 @@
 			<dependency>
 				<groupId>com.thoughtworks.xstream</groupId>
 				<artifactId>xstream</artifactId>
-				<version>1.4.12</version>
+				<version>1.4.18</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.mail</groupId>
@@ -434,16 +444,21 @@
 				<version>42.2.16</version>
 				<scope>runtime</scope>
 			</dependency>
+            <dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.12.4</version>
+            </dependency>
 			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-core-asl</artifactId>
-				<version>1.9.13</version>
+				<groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.12.4</version>
 			</dependency>
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>1.9.13</version>
-			</dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.12.4</version>
+            </dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
@@ -669,6 +684,7 @@
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>3.2.0</version>
 				</plugin>
+                <!--
 				<plugin>
 					<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
 					<artifactId>maven-java-formatter-plugin</artifactId>
@@ -688,6 +704,7 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+                -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-checkstyle-plugin</artifactId>
@@ -1153,7 +1170,7 @@
 		<mockitoVersion>3.5.11</mockitoVersion>
 
 		<slf4jVersion>1.7.32</slf4jVersion>
-		<log4jVersion>2.15.0</log4jVersion>
+		<log4jVersion>2.16.0</log4jVersion>
 
 		<customArgLineForTesting />
 

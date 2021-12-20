@@ -12,9 +12,10 @@ package org.openmrs;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Field;
 import org.openmrs.util.OpenmrsUtil;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * PersonAttributeType

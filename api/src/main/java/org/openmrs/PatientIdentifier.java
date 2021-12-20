@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Boost;
 import org.hibernate.search.annotations.DocumentId;
@@ -26,6 +25,8 @@ import org.openmrs.api.db.hibernate.search.LuceneAnalyzers;
 import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A <code>Patient</code> can have zero to n identifying PatientIdentifier(s). PatientIdentifiers

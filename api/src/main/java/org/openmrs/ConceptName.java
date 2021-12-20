@@ -18,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.standard.StandardFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.AnalyzerDef;
@@ -31,6 +30,8 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.openmrs.api.ConceptNameType;
 import org.openmrs.api.db.hibernate.search.bridge.LocaleFieldBridge;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * ConceptName is the real world term used to express a Concept within the idiom of a particular

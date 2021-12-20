@@ -63,6 +63,10 @@ public class SimpleXStreamSerializer implements OpenmrsSerializer {
 		if (customXstream == null) {
 			
 			xstream = new XStream();
+			XStream.setupDefaultSecurity(xstream);
+			xstream.allowTypesByWildcard(new String[] {
+			    "org.openmrs.**"
+			});
 			
 		} else {
 			this.xstream = customXstream;

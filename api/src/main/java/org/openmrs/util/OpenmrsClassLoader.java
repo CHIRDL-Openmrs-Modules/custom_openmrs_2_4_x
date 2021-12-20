@@ -76,11 +76,16 @@ public class OpenmrsClassLoader extends URLClassLoader {
 	public OpenmrsClassLoader(ClassLoader parent) {
 		super(new URL[0], parent);
 		
-		if (parent instanceof OpenmrsClassLoader) {
-			throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
-		} else if (parent instanceof ModuleClassLoader) {
-			throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
-		}
+		// CHICA-923 Per discussion on talk.openmrs.org this code can be removed.
+		// Commenting it out rather than removing to prevent errors shown below.
+		//DssServiceImpl.runRules|2016-12-14 12:36:14,025|Error loading rule: fullDateFormat
+		//DssServiceImpl.runRules|2016-12-14 12:36:14,025|Parent must not be ModuleClassLoader
+		//DssServiceImpl.runRules|2016-12-14 12:36:14,026|java.lang.IllegalArgumentException: Parent must not be ModuleClassLoader
+		//		if (parent instanceof OpenmrsClassLoader) {
+		//			throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
+		//		} else if (parent instanceof ModuleClassLoader) {
+		//			throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
+		//		}
 		
 		OpenmrsClassLoaderHolder.INSTANCE = this;
 		

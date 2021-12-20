@@ -603,6 +603,7 @@ public class Context {
 					props.setProperty("mail.from", adminService.getGlobalProperty("mail.from"));
 					props.setProperty("mail.debug", adminService.getGlobalProperty("mail.debug"));
 					props.setProperty("mail.smtp.auth", adminService.getGlobalProperty("mail.smtp_auth"));
+					props.setProperty("mail.smtp.ssl.protocols", adminService.getGlobalProperty("mail.smtp_ssl_protocols"));
 					props.setProperty(OpenmrsConstants.GP_MAIL_SMTP_STARTTLS_ENABLE, adminService.getGlobalProperty(OpenmrsConstants.GP_MAIL_SMTP_STARTTLS_ENABLE));
 
 					Authenticator auth = new Authenticator() {

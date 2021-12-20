@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.Transient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
@@ -33,6 +32,8 @@ import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Person in the system. This can be either a small person stub, or indicative of an actual

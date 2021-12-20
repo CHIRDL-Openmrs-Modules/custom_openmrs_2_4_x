@@ -29,27 +29,33 @@
 		</Memory>
 	</Appenders>
 	<Loggers>
-		<Logger name="org.apache" level="WARN" />
+		<Logger name="org.apache" level="ERROR" />
 		<Logger name="org.hibernate" level="ERROR" />
 		<Logger name="net.sf.ehcache" level="ERROR" />
-		<Logger name="org.springframework" level="WARN" />
-		<Logger name="org.openmrs" level="WARN" />
+		<Logger name="org.springframework" level="ERROR" />
+		<Logger name="org.openmrs" level="ERROR" />
 		<Logger name="liquibase" level="INFO" />
+        <Logger name="org.openmrs.Concept" level="INFO" />
 		<!-- 
 			This controls the LoggingAdvice class that wraps around the OpenMRS services 
 			WARN == don't log anything special for the services
 			INFO == log all setters
 			DEBUG == log all setters & log all getters & log execution time
 		-->
-		<Logger name="org.openmrs.api" level="INFO" />
+		<Logger name="org.openmrs.api" level="ERROR" />
 		<Logger name="org.apache.fop" level="ERROR" />
+        <Logger name="org.apache.pdfbox" level="ERROR" />
 		<!-- Hide the useless MissingResourceException -->
 		<Logger name="org.springframework.context.support.ResourceBundleMessageSource" level="ERROR" />
 		<Logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="ERROR" />
-		<Root level="WARN">
+		<Root level="INFO">
 			<AppenderRef ref="CONSOLE" />
 			<AppenderRef ref="MEMORY_APPENDER" />
 			<!--<AppenderRef ref="DEBUGGING_FILE_APPENDER" />-->
 		</Root>
+        <Logger name="ca.uhn" level="ERROR" additivity="false">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="MEMORY_APPENDER"/>
+        </Logger>
 	</Loggers>
 </Configuration>

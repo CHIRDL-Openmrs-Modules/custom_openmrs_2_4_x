@@ -11,11 +11,12 @@ package org.openmrs;
 
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.openmrs.customdatatype.CustomDatatype;
 import org.openmrs.customdatatype.CustomDatatypeUtil;
 import org.openmrs.customdatatype.CustomValueDescriptor;
 import org.openmrs.customdatatype.SingleCustomValue;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Global properties are simple key-value pairs persisted in the database GPs can be thought of as

@@ -54,6 +54,8 @@ import org.openmrs.api.handler.VoidHandler;
 @Entity
 @Table(name = "encounter")
 @BatchSize(size = 25)
+//@DiscriminatorColumn(name="encounter_id")
+//@DiscriminatorOptions(insert = false, force = true)
 public class Encounter extends BaseChangeableOpenmrsData {
 	
 	public static final long serialVersionUID = 2L;

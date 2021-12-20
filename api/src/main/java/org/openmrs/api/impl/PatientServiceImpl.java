@@ -1633,4 +1633,20 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 			throw new PatientIdentifierTypeLockedException();
 		}
 	}
+	
+	/**
+	 * @see org.openmrs.api.PatientService#getPatientsByIdentifier(java.lang.String, java.lang.String,
+	 *      java.util.List, boolean)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<Patient> getPatientsByIdentifier(String name, String identifier,
+	        List<PatientIdentifierType> identifierTypes, boolean matchIdentifierExactly) throws APIException {
+
+		if (identifierTypes == null) {
+			identifierTypes = Collections.emptyList();
+		}
+
+		return dao.getPatientsByIdentifier(name, identifier, identifierTypes, matchIdentifierExactly);
+	}
 }

@@ -83,11 +83,13 @@ public class ModuleClassLoader extends URLClassLoader {
 	    final URLStreamHandlerFactory factory) {
 		super(urls.toArray(new URL[urls.size()]), parent, factory);
 		
-		if (parent instanceof OpenmrsClassLoader) {
-			throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
-		} else if (parent instanceof ModuleClassLoader) {
-			throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
-		}
+		// CHICA-923 Per discussion on talk.openmrs.org this code can be removed.
+		// See same issue in OpenmrsClassLoader
+//		if (parent instanceof OpenmrsClassLoader) {
+//			throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
+//		} else if (parent instanceof ModuleClassLoader) {
+//			throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
+//		}
 		
 		if (log.isDebugEnabled()){
 			log.debug("URLs length: " + urls.size());
