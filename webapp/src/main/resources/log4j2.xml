@@ -47,13 +47,11 @@
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
-		<RollingFile name="DEBUGGING_FILE_APPENDER" fileName="openmrs.log" filePattern="openmrs.%i.log.gz" append="false">
+		<RollingFile name="DEBUGGING_FILE_APPENDER" fileName="${sys:catalina.home}/logs/openmrs.log" filePattern="${sys:catalina.home}/logs/openmrs.%d{yyyy-MM-dd}.log">
 			<PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n" />
 			<Policies>
-				<OnStartupTriggeringPolicy />
-				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy interval="1"/>
 			</Policies>
-			<DefaultRolloverStrategy max="1" />
 		</RollingFile>
         <RollingFile name="DSS_FILE" fileName="${sys:catalina.home}/logs/dss.log" filePattern="${sys:catalina.home}/logs/dss.%d{yyyy-MM-dd}.log">
               <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
