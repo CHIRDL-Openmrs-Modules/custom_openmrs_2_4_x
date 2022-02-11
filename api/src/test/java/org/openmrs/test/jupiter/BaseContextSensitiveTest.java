@@ -818,7 +818,7 @@ public abstract class BaseContextSensitiveTest {
 	}
 	
 	protected IDatabaseConnection setupDatabaseConnection(Connection connection) throws DatabaseUnitException {
-		IDatabaseConnection dbUnitConn = new DatabaseConnection(connection);
+		IDatabaseConnection dbUnitConn = new DatabaseConnection(connection, "public");
 		
 		if (useInMemoryDatabase()) {
 			//Setup the db connection to use H2 config.
