@@ -12,102 +12,103 @@
 -->
 
 <Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
-	<Appenders>
-		<RollingFile name="CONSOLE" fileName="${sys:catalina.home}/logs/chica.log" filePattern="${sys:catalina.home}/logs/chica.%d{dd-MM-yyy}.log">
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
+    <Properties>
+        <!-- The default pattern is stored as a property so that it's only defined once.
+             It's also quite challenging to escape using Log4j2's variable substitution. -->
+        <Property name="defaultPattern">%d{MMM-dd-yyyy HH:mm:ss.SSS} [%-6p] %C{1}.%M(%F:%L) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <!-- the console appender is not required but usually a good idea -->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="${defaultPattern}" />
+        </Console>
+        <RollingFile name="OPENMRS_FILE_APPENDER" fileName="${sys:catalina.home}/logs/openmrs.log" filePattern="${sys:catalina.home}/logs/openmrs.%d{dd-MM-yyy}.log">
+              <PatternLayout pattern="${defaultPattern}"/>
               <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
-        <RollingFile name="info-out" fileName="${sys:catalina.home}/logs/chica_info.log" filePattern="${sys:catalina.home}/logs/chica_info.%d{dd-MM-yyy}.log">
-              <LevelRangeFilter minLevel="INFO" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
+        <RollingFile name="CHICA_INFO_FILE_APPENDER" fileName="${sys:catalina.home}/logs/chica_info.log" filePattern="${sys:catalina.home}/logs/chica_info.%d{dd-MM-yyy}.log">
+              <LevelRangeFilter minLevel="WARN" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+              <PatternLayout pattern="${defaultPattern}"/>
               <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
-        <RollingFile name="error-out" fileName="${sys:catalina.home}/logs/chica_error.log" filePattern="${sys:catalina.home}/logs/chica_error.%d{yyyy-MM-dd}.log">
-              <LevelRangeFilter minLevel="ERROR" maxLevel="FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
+        <RollingFile name="CHICA_ERROR_FILE_APPENDER" fileName="${sys:catalina.home}/logs/chica_error.log" filePattern="${sys:catalina.home}/logs/chica_error.%d{yyyy-MM-dd}.log">
+              <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+              <PatternLayout pattern="${defaultPattern}"/>
               <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
-        <RollingFile name="debug-out" fileName="${sys:catalina.home}/logs/chica_debug.log" filePattern="${sys:catalina.home}/logs/chica_debug.%d{yyyy-MM-dd}.log">
+        <RollingFile name="CHICA_DEBUG_FILE_APPENDER" fileName="${sys:catalina.home}/logs/chica_debug.log" filePattern="${sys:catalina.home}/logs/chica_debug.%d{yyyy-MM-dd}.log">
               <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
+              <PatternLayout pattern="${defaultPattern}"/>
+              <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+              </Policies>                               
+        </RollingFile>
+        <RollingFile name="DSS_FILE_FILE_APPENDER" fileName="${sys:catalina.home}/logs/dss.log" filePattern="${sys:catalina.home}/logs/dss.%d{yyyy-MM-dd}.log">
+              <PatternLayout pattern="${defaultPattern}"/>
               <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
         <RollingFile name="SocketHandlerAppender" fileName="${sys:catalina.home}/logs/SocketHandler.log" filePattern="${sys:catalina.home}/logs/SocketHandler.%d{yyyy-MM-dd}.log">
-              <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
+              <PatternLayout pattern="${defaultPattern}"/>
               <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
               </Policies>                               
         </RollingFile>
-		<RollingFile name="DEBUGGING_FILE_APPENDER" fileName="${sys:catalina.home}/logs/openmrs.log" filePattern="${sys:catalina.home}/logs/openmrs.%d{yyyy-MM-dd}.log">
-			<PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n" />
-			<Policies>
-				<TimeBasedTriggeringPolicy interval="1"/>
-			</Policies>
-		</RollingFile>
-        <RollingFile name="DSS_FILE" fileName="${sys:catalina.home}/logs/dss.log" filePattern="${sys:catalina.home}/logs/dss.%d{yyyy-MM-dd}.log">
-              <PatternLayout pattern="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %m%n"/>
-              <Policies>
-                <TimeBasedTriggeringPolicy interval="1"/>
-              </Policies>                               
-        </RollingFile>
-		<Memory name="MEMORY_APPENDER">
-			<PatternLayout pattern="%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n" />
-		</Memory>
-	</Appenders>
-	<Loggers>
-		<Logger name="org.apache" level="ERROR" />
-		<Logger name="org.hibernate" level="ERROR" />
-		<Logger name="net.sf.ehcache" level="ERROR" />
-		<Logger name="org.springframework" level="ERROR" />
-		<Logger name="org.openmrs" level="ERROR" />
-		<Logger name="liquibase" level="ERROR" />
+        <!-- The MEMORY_APPENDER is used to keep a subset of logging messages in memory to be displayed to the user.
+             If one is not configured here, it will be created automatically. -->
+        <Memory name="MEMORY_APPENDER"
+                bufferSize="200"> <!-- bufferSize is how many messages are kept in memory -->
+            <PatternLayout pattern="${defaultPattern}" />
+        </Memory>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache" level="ERROR" />
+        <Logger name="org.hibernate" level="ERROR" />
+        <Logger name="net.sf.ehcache" level="ERROR" />
+        <Logger name="org.springframework" level="ERROR" />
+        <Logger name="org.openmrs" level="ERROR" />
         <Logger name="org.openmrs.Concept" level="ERROR" />
-		<!-- 
-			This controls the LoggingAdvice class that wraps around the OpenMRS services 
-			WARN == don't log anything special for the services
-			INFO == log all setters
-			DEBUG == log all setters & log all getters & log execution time
-		-->
-		<Logger name="org.openmrs.api" level="ERROR" />
-		<Logger name="org.apache.fop" level="ERROR" />
+        <Logger name="org.openmrs.api" level="ERROR" />
+        <Logger name="org.apache.fop" level="ERROR" />
         <Logger name="org.apache.pdfbox" level="ERROR" />
-		<!-- Hide the useless MissingResourceException -->
-		<Logger name="org.springframework.context.support.ResourceBundleMessageSource" level="ERROR" />
-		<Logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="ERROR" />
-		<Root level="INFO">
-			<AppenderRef ref="CONSOLE" />
-			<AppenderRef ref="MEMORY_APPENDER" />
-			<!--<AppenderRef ref="DEBUGGING_FILE_APPENDER" />-->
-		</Root>
-        <Logger name="ca.uhn" level="ERROR" additivity="false">
-            <AppenderRef ref="CONSOLE"/>
-            <AppenderRef ref="MEMORY_APPENDER"/>
-        </Logger>
+        <Logger name="liquibase" level="ERROR" />
         <Logger name="org.openmrs.module.dss.DssManager" level="INFO">
-            <AppenderRef ref="DSS_FILE"/>
+            <AppenderRef ref="DSS_FILE_FILE_APPENDER"/>
         </Logger>
         <Logger name="org.openmrs.module.dss.CompilingClassLoader" level="INFO">
-            <AppenderRef ref="DSS_FILE"/>
+            <AppenderRef ref="DSS_FILE_FILE_APPENDER"/>
         </Logger>
         <Logger name="org.openmrs.module.dss.impl.DssServiceImpl" level="INFO">
-            <AppenderRef ref="DSS_FILE"/>
+            <AppenderRef ref="DSS_FILE_FILE_APPENDER"/>
         </Logger>
         <Logger name="org.openmrs.module" level="INFO" additivity="false">
-            <AppenderRef ref="info-out"/>
-            <AppenderRef ref="error-out"/>
-            <AppenderRef ref="debug-out"/>
+            <AppenderRef ref="CHICA_INFO_FILE_APPENDER"/>
+            <AppenderRef ref="CHICA_ERROR_FILE_APPENDER"/>
+            <AppenderRef ref="CHICA_DEBUG_FILE_APPENDER"/>
         </Logger>
-        <Logger name="SocketHandlerLogger" level="WARN" additivity="false">
+        <Logger name="SocketHandlerLogger" level="INFO" additivity="false">
             <AppenderRef ref="SocketHandlerAppender"/>
         </Logger>
-	</Loggers>
+        <!-- 
+            This controls the LoggingAdvice class that wraps around the OpenMRS services 
+            WARN == don't log anything special for the services
+            INFO == log all setters
+            DEBUG == log all setters & log all getters & log execution time
+        -->
+        <!-- Hide the useless MissingResourceException -->
+        <Logger name="org.springframework.context.support.ResourceBundleMessageSource" level="ERROR" />
+        <Logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="ERROR" />
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="MEMORY_APPENDER" />
+            <AppenderRef ref="OPENMRS_FILE_APPENDER"/>
+        </Root>
+    </Loggers>
 </Configuration>
