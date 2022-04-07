@@ -17,10 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import javax.annotation.Resource;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
+
+import javax.annotation.Resource;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -352,6 +353,16 @@ public class ContextDAOTest extends BaseContextSensitiveTest {
 
 		@Override
 		public void loggedInOrOut(User user, Event event, Status status) {
+			loggedInOrOut(user, event, status, null, null);
+		}
+
+		public void clear() {
+			logins.clear();
+			logouts.clear();
+		}
+
+		@Override
+		public void loggedInOrOut(User user, Event event, Status status, String ipAddress, String userAgent) {
 			if (event != null && user != null) {
 				if (Event.LOGIN.equals(event)) {
 					logins.add(user.getUsername() + ":" + event + ":" + status);
@@ -360,11 +371,6 @@ public class ContextDAOTest extends BaseContextSensitiveTest {
 							user.getUsername() + ":" + event + ":" + status);
 				}
 			}
-		}
-
-		public void clear() {
-			logins.clear();
-			logouts.clear();
 		}
 	}
 
