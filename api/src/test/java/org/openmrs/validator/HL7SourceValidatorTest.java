@@ -30,6 +30,7 @@ public class HL7SourceValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
 		HL7Source hl7Source = new HL7Source();
 		hl7Source.setName("name");
+		hl7Source.setDescription("description");
 		
 		Errors errors = new BindException(hl7Source, "hl7Source");
 		new HL7SourceValidator().validate(hl7Source, errors);

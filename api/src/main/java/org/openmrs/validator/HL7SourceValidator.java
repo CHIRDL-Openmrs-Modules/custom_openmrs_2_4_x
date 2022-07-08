@@ -51,6 +51,7 @@ public class HL7SourceValidator implements Validator {
 			errors.rejectValue("hl7Source", "error.general");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.null");
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name");
 		}
 	}
