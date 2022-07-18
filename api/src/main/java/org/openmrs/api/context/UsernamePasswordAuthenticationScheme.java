@@ -9,6 +9,8 @@
  */
 package org.openmrs.api.context;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +21,9 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.3.0
  */
-public class UsernamePasswordAuthenticationScheme extends DaoAuthenticationScheme {
+public class UsernamePasswordAuthenticationScheme extends DaoAuthenticationScheme implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(UsernamePasswordAuthenticationScheme.class);
 
 	@Override
