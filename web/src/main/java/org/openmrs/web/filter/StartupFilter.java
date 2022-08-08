@@ -47,7 +47,6 @@ import org.apache.velocity.tools.config.DefaultKey;
 import org.apache.velocity.tools.config.FactoryConfiguration;
 import org.apache.velocity.tools.config.ToolConfiguration;
 import org.apache.velocity.tools.config.ToolboxConfiguration;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.OpenmrsCharacterEscapes;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
@@ -59,6 +58,8 @@ import org.openmrs.web.filter.util.FilterUtil;
 import org.openmrs.web.filter.util.LocalizationTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Abstract class used when a small wizard is needed before Spring, jsp, etc has been started up.
@@ -350,7 +351,7 @@ public abstract class StartupFilter implements Filter {
 	 */
 	protected String toJSONString(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.getJsonFactory().setCharacterEscapes(new OpenmrsCharacterEscapes());
+		mapper.getFactory().setCharacterEscapes(new OpenmrsCharacterEscapes());
 		try {
 			return mapper.writeValueAsString(object);
 		}

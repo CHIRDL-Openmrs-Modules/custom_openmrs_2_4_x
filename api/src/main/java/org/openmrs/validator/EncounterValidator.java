@@ -82,25 +82,26 @@ public class EncounterValidator implements Validator {
 			    "The patient for the encounter and visit should be the same");
 		}
 		
-		Date encounterDateTime = encounter.getEncounterDatetime();
-		
-		if (encounterDateTime != null && encounterDateTime.after(new Date())) {
-			errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeBeforeCurrent",
-			    "The encounter datetime should be before the current date.");
-		}
-		
-		Visit visit = encounter.getVisit();
-		if (visit != null && encounterDateTime != null) {
-			if (visit.getStartDatetime() != null && encounterDateTime.before(visit.getStartDatetime())) {
-				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
-				    "The encounter datetime should be between the visit start and stop dates.");
-			}
-			
-			if (visit.getStopDatetime() != null && encounterDateTime.after(visit.getStopDatetime())) {
-				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
-				    "The encounter datetime should be between the visit start and stop dates.");
-			}
-		}
+		// CHICA-1035 Remove time validation due to server time issues.
+//		Date encounterDateTime = encounter.getEncounterDatetime();
+//		
+//		if (encounterDateTime != null && encounterDateTime.after(new Date())) {
+//			errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeBeforeCurrent",
+//			    "The encounter datetime should be before the current date.");
+//		}
+//		
+//		Visit visit = encounter.getVisit();
+//		if (visit != null && encounterDateTime != null) {
+//			if (visit.getStartDatetime() != null && encounterDateTime.before(visit.getStartDatetime())) {
+//				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
+//				    "The encounter datetime should be between the visit start and stop dates.");
+//			}
+//			
+//			if (visit.getStopDatetime() != null && encounterDateTime.after(visit.getStopDatetime())) {
+//				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
+//				    "The encounter datetime should be between the visit start and stop dates.");
+//			}
+//		}
 		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "voidReason");
 	}
 }

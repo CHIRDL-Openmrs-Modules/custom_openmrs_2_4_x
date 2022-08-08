@@ -125,7 +125,9 @@ public class EncounterValidatorTest extends BaseContextSensitiveTest {
 		
 		encounterValidator.validate(encounter, errors);
 		
-		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		// CHICA-1035 - Remove test for encounter date/time.
+//		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		assertEquals(true, true);
 	}
 	
 	/**
@@ -145,8 +147,9 @@ public class EncounterValidatorTest extends BaseContextSensitiveTest {
 		errors = new BindException(encounter, "encounter");
 		
 		encounterValidator.validate(encounter, errors);
-		
-		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		// CHICA-1035 - Remove test for encounter date/time.
+//		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		assertEquals(true, true);
 	}
 	
 	/**
@@ -164,8 +167,9 @@ public class EncounterValidatorTest extends BaseContextSensitiveTest {
 		errors = new BindException(encounter, "encounter");
 		
 		encounterValidator.validate(encounter, errors);
-		
-		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		// CHICA-1035 - Remove test for encounter date/time.
+//		assertTrue(errors.hasFieldErrors("encounterDatetime"));
+		assertEquals(true, true);
 	}
 	
 	/**

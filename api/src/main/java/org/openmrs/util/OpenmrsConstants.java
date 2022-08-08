@@ -731,6 +731,7 @@ public final class OpenmrsConstants {
 		props.add(new GlobalProperty("mail.password", "test", "Password for the SMTP user (if smtp_auth is enabled)"));
 		props.add(new GlobalProperty("mail.default_content_type", "text/plain",
 		        "Content type to append to the mail messages"));
+		props.add(new GlobalProperty("mail.smtp_ssl_protocols", "TLSv1.2", "SSL protocols used for mail transport"));
 		
 		props.add(new GlobalProperty(ModuleConstants.REPOSITORY_FOLDER_PROPERTY,
 		        ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT, "Name of the folder in which to store the modules"));
