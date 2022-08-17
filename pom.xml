@@ -596,6 +596,17 @@
 				<artifactId>jaxb-impl</artifactId>
 			    <version>3.0.0-M4</version>
 			</dependency>
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>1.6.2</version>
+                <exclusions>
+                    <exclusion>  <!-- declare the exclusion here -->
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
