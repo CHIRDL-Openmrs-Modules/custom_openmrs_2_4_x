@@ -39,7 +39,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.log.CommonsLogLogChute;
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.ToolContext;
 import org.apache.velocity.tools.ToolManager;
@@ -50,7 +49,9 @@ import org.apache.velocity.tools.config.ToolboxConfiguration;
 import org.openmrs.OpenmrsCharacterEscapes;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
-import org.openmrs.util.*;
+import org.openmrs.util.LocaleUtility;
+import org.openmrs.util.MemoryAppender;
+import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.WebConstants;
 import org.openmrs.web.filter.initialization.InitializationFilter;
 import org.openmrs.web.filter.update.UpdateFilter;
@@ -178,17 +179,20 @@ public abstract class StartupFilter implements Filter {
 			velocityEngine = new VelocityEngine();
 			
 			Properties props = new Properties();
-			props.setProperty(RuntimeConstants.RUNTIME_LOG, "startup_wizard_vel.log");
 			// Linux requires setting logging properties to initialize Velocity Context.
-			props.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			    "org.apache.velocity.runtime.log.CommonsLogLogChute");
-			props.setProperty(CommonsLogLogChute.LOGCHUTE_COMMONS_LOG_NAME, "initial_wizard_velocity");
-			
 			// so the vm pages can import the header/footer
 			props.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
 			props.setProperty("class.resource.loader.description", "Velocity Classpath Resource Loader");
 			props.setProperty("class.resource.loader.class",
 			    "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+			props.setProperty("introspector.conversion_handler.class", "none");
+			props.setProperty("parser.space_gobbling", "bc");
+			props.setProperty("directive.if.empty_check", "false");
+			props.setProperty("parser.allow_hyphen_in_identifiers", "true");
+			props.setProperty("velocimacro.enable_bc_mode", "true");
+			props.setProperty("event_handler.invalid_references.quiet", "true");
+			props.setProperty("event_handler.invalid_references.null", "true");
+			props.setProperty("event_handler.invalid_references.tested", "true");
 			
 			try {
 				velocityEngine.init(props);
@@ -245,7 +249,7 @@ public abstract class StartupFilter implements Filter {
 		
 		Object model = getUpdateFilterModel();
 		
-		// put each of the private varibles into the template for convenience
+		// put each of the private variables into the template for convenience
 		for (Field field : model.getClass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
