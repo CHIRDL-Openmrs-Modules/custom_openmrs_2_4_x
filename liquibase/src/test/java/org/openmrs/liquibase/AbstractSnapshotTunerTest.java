@@ -9,7 +9,6 @@
  */
 package org.openmrs.liquibase;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,8 +32,8 @@ public class AbstractSnapshotTunerTest {
 	
 	private static final String HTTP_OPENMRS_ORG_LICENSE = "http://openmrs.org/license";
 	
-	private static String PATH_TO_TEST_RESOURCES = "src" + File.separator + "test" + File.separator + "resources"
-	        + File.separator;
+	private static String PATH_TO_TEST_RESOURCES = Paths.get("src", "test", "resources").toString();
+
 	
 	/*
 	 * An instance of org.openmrs.liquibase.SchemaOnlyTuner is used to test behaviour implemented in the 
@@ -58,25 +57,25 @@ public class AbstractSnapshotTunerTest {
 	}
 	
 	@Test
-	public void shouldReadFile() throws FileNotFoundException {
+	public void shouldReadFile() throws IOException {
 		assertTrue(schemaOnlyTuner.readFile(PATH_TO_TEST_RESOURCES + FILE_WITH_LICENSE_HEADER_MD)
 		        .contains(HTTP_OPENMRS_ORG_LICENSE));
 	}
 	
 	@Test
-	public void shouldReadResource() throws FileNotFoundException {
+	public void shouldReadResource() throws IOException {
 		assertTrue(schemaOnlyTuner.readResource(FILE_WITH_LICENSE_HEADER_MD).contains(HTTP_OPENMRS_ORG_LICENSE));
 	}
 	
 	@Test
-	public void shouldAddLicenseHeaderToXmlFile() throws FileNotFoundException {
+	public void shouldAddLicenseHeaderToXmlFile() throws IOException {
 		// given
 		String contentWithoutLicenseHeader = schemaOnlyTuner.readResource(FILE_WITHOUT_LICENSE_HEADER_MD);
 		assertFalse(contentWithoutLicenseHeader.contains(HTTP_OPENMRS_ORG_LICENSE));
 		
 		//  when
 		String actual = schemaOnlyTuner
-		        .addLicenseHeaderToFileContent(PATH_TO_TEST_RESOURCES + File.separator + FILE_WITHOUT_LICENSE_HEADER_MD);
+				.addLicenseHeaderToFileContent(Paths.get(PATH_TO_TEST_RESOURCES, FILE_WITHOUT_LICENSE_HEADER_MD).toString());
 		
 		// then
 		assertTrue(actual.contains(HTTP_OPENMRS_ORG_LICENSE));

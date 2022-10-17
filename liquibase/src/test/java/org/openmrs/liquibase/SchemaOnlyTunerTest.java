@@ -9,9 +9,10 @@
  */
 package org.openmrs.liquibase;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,16 +35,14 @@ import static org.mockito.ArgumentMatchers.any;
 
 public class SchemaOnlyTunerTest {
 	
-	private static final String LIQUIBASE_SCHEMA_ONLY_SNAPSHOT_XML = "org" + File.separator + "openmrs" + File.separator
-	        + "liquibase" + File.separator + "snapshots" + File.separator + "schema-only" + File.separator
-	        + "liquibase-schema-only-SNAPSHOT.xml";
+	private static final String LIQUIBASE_SCHEMA_ONLY_SNAPSHOT_XML = Paths
+	        .get("org", "openmrs", "liquibase", "snapshots", "schema-only", "liquibase-schema-only-SNAPSHOT.xml").toString();
 	
-	private static final String LIQUIBASE_SCHEMA_ONLY_UPDATED_SNAPSHOT_XML = "org" + File.separator + "openmrs"
-	        + File.separator + "liquibase" + File.separator + "snapshots" + File.separator + "schema-only" + File.separator
-	        + "liquibase-schema-only-UPDATED-SNAPSHOT.xml";
+	private static final String LIQUIBASE_SCHEMA_ONLY_UPDATED_SNAPSHOT_XML = Paths
+	        .get("org", "openmrs", "liquibase", "snapshots", "schema-only", "liquibase-schema-only-UPDATED-SNAPSHOT.xml")
+	        .toString();
 	
-	private static String PATH_TO_TEST_RESOURCES = "src" + File.separator + "test" + File.separator + "resources"
-	        + File.separator;
+	private static String PATH_TO_TEST_RESOURCES = Paths.get("src", "test", "resources").toString();
 	
 	private Document document;
 	
@@ -52,7 +51,7 @@ public class SchemaOnlyTunerTest {
 	private SchemaOnlyTuner schemaOnlyTuner;
 	
 	@BeforeEach
-	public void setup() throws DocumentException {
+	public void setup() throws DocumentException, FileNotFoundException {
 		schemaOnlyTuner = new SchemaOnlyTuner();
 		document = schemaOnlyTuner.readChangeLogResource(LIQUIBASE_SCHEMA_ONLY_SNAPSHOT_XML);
 		namespaceUris = schemaOnlyTuner.getNamespaceUris();

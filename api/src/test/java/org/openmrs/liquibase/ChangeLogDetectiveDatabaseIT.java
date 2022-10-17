@@ -55,6 +55,7 @@ public class ChangeLogDetectiveDatabaseIT extends H2DatabaseIT {
 	
 	@Test
 	public void shouldGetUnrunLiquibaseUpdateFileNames() throws Exception {
+		
 		ChangeLogDetective changeLogDetective = new ChangeLogDetective();
 		ChangeLogVersionFinder changeLogVersionFinder = new ChangeLogVersionFinder();
 		Map<String, List<String>> snapshotCombinations = changeLogVersionFinder.getSnapshotCombinations();

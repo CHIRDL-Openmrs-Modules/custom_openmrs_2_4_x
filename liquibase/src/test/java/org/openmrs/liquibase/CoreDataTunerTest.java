@@ -9,9 +9,10 @@
  */
 package org.openmrs.liquibase;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,16 +35,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CoreDataTunerTest {
 	
-	private static final String LIQUIBASE_CORE_DATA_SNAPSHOT_XML = "org" + File.separator + "openmrs" + File.separator
-	        + "liquibase" + File.separator + "snapshots" + File.separator + "core-data" + File.separator
-	        + "liquibase-core-data-SNAPSHOT.xml";
+	private static final String LIQUIBASE_CORE_DATA_SNAPSHOT_XML = Paths
+	        .get("org", "openmrs", "liquibase", "snapshots", "core-data", "liquibase-core-data-SNAPSHOT.xml").toString();
 	
-	private static final String LIQUIBASE_CORE_DATA_UPDATED_SNAPSHOT_XML = "org" + File.separator + "openmrs"
-	        + File.separator + "liquibase" + File.separator + "snapshots" + File.separator + "core-data" + File.separator
-	        + "liquibase-core-data-UPDATED-SNAPSHOT.xml";
+	private static final String LIQUIBASE_CORE_DATA_UPDATED_SNAPSHOT_XML = Paths
+	        .get("org", "openmrs", "liquibase", "snapshots", "core-data", "liquibase-core-data-UPDATED-SNAPSHOT.xml")
+	        .toString();
 	
-	private static String PATH_TO_TEST_RESOURCES = "src" + File.separator + "test" + File.separator + "resources"
-	        + File.separator;
+	private static String PATH_TO_TEST_RESOURCES = Paths.get("src", "test", "resources").toString();
 	
 	public static final int TWENTY_FIVE = 25;
 	
@@ -58,7 +57,7 @@ public class CoreDataTunerTest {
 	private CoreDataTuner coreDataTuner;
 	
 	@BeforeEach
-	public void setup() throws DocumentException {
+	public void setup() throws DocumentException, FileNotFoundException {
 		coreDataTuner = new CoreDataTuner();
 		document = coreDataTuner.readChangeLogResource(LIQUIBASE_CORE_DATA_SNAPSHOT_XML);
 		namespaceUris = coreDataTuner.getNamespaceUris();
