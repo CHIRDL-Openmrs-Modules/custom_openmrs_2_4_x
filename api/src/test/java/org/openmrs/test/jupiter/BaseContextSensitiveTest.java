@@ -824,6 +824,7 @@ public abstract class BaseContextSensitiveTest {
 			//Setup the db connection to use H2 config.
 			DatabaseConfig config = dbUnitConn.getConfig();
 			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new H2DataTypeFactory());
+			config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
 		}
 		
 		return dbUnitConn;

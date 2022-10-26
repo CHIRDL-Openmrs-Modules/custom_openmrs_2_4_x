@@ -170,6 +170,7 @@ public class TestUtil {
 			IDatabaseConnection connection = new DatabaseConnection(sqlConnection);
 			DatabaseConfig config = connection.getConfig();
 			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqldbDataTypeFactory());
+			config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
 			QueryDataSet outputSet = new QueryDataSet(connection);
 			outputSet.addTable(tableName);
 			FlatXmlDataSet.write(outputSet, System.out);

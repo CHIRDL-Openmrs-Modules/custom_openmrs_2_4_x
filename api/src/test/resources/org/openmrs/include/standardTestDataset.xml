@@ -406,8 +406,8 @@
   <relationship relationship_id="1" person_a="502" relationship="1" person_b="2" creator="1" date_created="2008-08-18 11:50:15.0" voided="false" uuid="c18717dd-5d78-4a0e-84fc-ee62c5f0676a"/>
   <relationship relationship_id="2" person_a="502" relationship="1" person_b="7" creator="1" date_created="2008-08-18 11:53:50.0" voided="false" uuid="8c0a3d9c-bf61-496b-95b0-72e6bc4a2b83"/>
   <role role="Provider" description="General privileges held by all providers" uuid="3480cb6d-c291-46c8-8d3a-96dc33d199fb"/>
-  <users user_id="501" person_id="501" system_id="2-6" username="bruno" password="ff6d1655327d385e11a04e1632b4f33ceb8fafd2" salt="5d32c5fd9fde391c755f1f4dfd5e1d6e3debe6" secret_question="" creator="1" date_created="2008-08-15 15:46:47.0" changed_by="1" date_changed="2008-08-15 15:47:07.0" retired="true" retire_reason="Test purposes" uuid="c1d8f5c2-e131-11de-babe-001e378eb67e"/>
-  <users user_id="502" person_id="502" system_id="3-4" username="butch" password="eeeda5c0cc3837151b2d61cfeab54a91fb0c27d" salt="42af4c437a47cd778a54f6564d71b3cd6e8e5ca" secret_question="" creator="1" date_created="2008-08-15 15:57:09.0" changed_by="1" date_changed="2008-08-18 11:51:56.0" retired="false" retire_reason="" uuid="c98a1558-e131-11de-babe-001e378eb67e"/>
+  <openmrs.users user_id="501" person_id="501" system_id="2-6" username="bruno" password="ff6d1655327d385e11a04e1632b4f33ceb8fafd2" salt="5d32c5fd9fde391c755f1f4dfd5e1d6e3debe6" secret_question="" creator="1" date_created="2008-08-15 15:46:47.0" changed_by="1" date_changed="2008-08-15 15:47:07.0" retired="true" retire_reason="Test purposes" uuid="c1d8f5c2-e131-11de-babe-001e378eb67e"/>
+  <openmrs.users user_id="502" person_id="502" system_id="3-4" username="butch" password="eeeda5c0cc3837151b2d61cfeab54a91fb0c27d" salt="42af4c437a47cd778a54f6564d71b3cd6e8e5ca" secret_question="" creator="1" date_created="2008-08-15 15:57:09.0" changed_by="1" date_changed="2008-08-18 11:51:56.0" retired="false" retire_reason="" uuid="c98a1558-e131-11de-babe-001e378eb67e"/>
   <user_role user_id="501" role="Provider"/>
   <user_role user_id="502" role="Provider"/>
   <global_property property="locale.allowed.list" property_value="en_GB" uuid="4f55827e-26fe-102b-80cb-0017a47871b3"/>
@@ -430,9 +430,9 @@
   <test_order order_id="7" number_of_repeats="2" />
   <test_order order_id="8" />
   <test_order order_id="9" />
-  <visit_type visit_type_id="1" name="Initial HIV Clinic Visit" description="Initial HIV Clinic Visit Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="c0c579b0-8e59-401d-8a4a-976a0b183519"/>
-  <visit_type visit_type_id="2" name="Return TB Clinic Visit" description="Return TB Clinic Visit Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="759799ab-c9a5-435e-b671-77773ada74e4"/>
-  <visit_type visit_type_id="3" name="Hospitalization" description="Hospitalization Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="true" retire_reason="Some Retire Reason" uuid="759799ab-c9a5-435e-b671-77773ada74e6"/> 
+  <openmrs.visit_type visit_type_id="1" name="Initial HIV Clinic Visit" description="Initial HIV Clinic Visit Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="c0c579b0-8e59-401d-8a4a-976a0b183519"/>
+  <openmrs.visit_type visit_type_id="2" name="Return TB Clinic Visit" description="Return TB Clinic Visit Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="759799ab-c9a5-435e-b671-77773ada74e4"/>
+  <openmrs.visit_type visit_type_id="3" name="Hospitalization" description="Hospitalization Description" creator="1" date_created="2005-01-01 00:00:00.0" retired="true" retire_reason="Some Retire Reason" uuid="759799ab-c9a5-435e-b671-77773ada74e6"/> 
   <visit visit_id="1" patient_id="2" visit_type_id="1" date_started="2005-01-01 00:00:00.0" location_id="1" indication_concept_id="5497" creator="1" date_created="2005-01-01 00:00:00.0" voided="0" uuid="1e5d5d48-6b78-11e0-93c3-18a905e044dc" />
   <visit visit_id="2" patient_id="2" visit_type_id="1" date_started="2005-01-01 00:00:00.0" creator="1" date_created="2005-01-01 00:00:00.0" voided="0" uuid="4e663d66-6b78-11e0-93c3-18a905e044dc" />
   <visit visit_id="3" patient_id="2" visit_type_id="2" date_started="2005-01-01 00:00:00.0" creator="1" date_created="2005-01-01 00:00:00.0" voided="0" uuid="6f85b2a6-6b78-11e0-93c3-18a905e044dc" />

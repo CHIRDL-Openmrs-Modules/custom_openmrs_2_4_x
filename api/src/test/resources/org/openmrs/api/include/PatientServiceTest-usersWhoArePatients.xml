@@ -16,7 +16,7 @@
   <person person_id="2" gender="M" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="fa6995c5-2774-4231-ac40-b4aa2b9ca22e"/>
   <person_name person_name_id="2" preferred="true" person_id="2" given_name="John" middle_name=" " family_name="Doe" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="c12b5aa7-4a92-448f-944a-8f412dcac848"/>
   <patient patient_id="2" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"/>
-  <users user_id="2" person_id="2" system_id="2ndusersystemid" username="2nduser" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="eeee30f4-66b4-460c-89ae-4e9077858333"/>
+  <openmrs.users user_id="2" person_id="2" system_id="2ndusersystemid" username="2nduser" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="eeee30f4-66b4-460c-89ae-4e9077858333"/>
   <person person_id="3" gender="M" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="796ac6f7-be83-4bfc-bf96-08ed61a98236"/>
   <person_name person_name_id="3" preferred="true" person_id="3" given_name="John" middle_name=" " family_name="Doe" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" uuid="bd2130f4-66b4-460c-899e-4e907785836b"/>
   <patient patient_id="3" creator="1" date_created="2005-01-01 00:00:00.0" voided="false"/>

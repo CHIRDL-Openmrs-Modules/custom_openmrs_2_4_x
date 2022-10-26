@@ -11,10 +11,12 @@ package org.openmrs.test;
 
 import java.io.FileOutputStream;
 
+import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
@@ -48,6 +50,9 @@ public class CreateInitialDataSet extends BaseContextSensitiveTest {
 		
 		// database connection for dbunit
 		IDatabaseConnection connection = new DatabaseConnection(getConnection());
+		DatabaseConfig config = connection.getConfig();
+		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new H2DataTypeFactory());
+		config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
 		
 		// partial database export
 		QueryDataSet initialDataSet = new QueryDataSet(connection);

@@ -49,7 +49,7 @@
   
   <person person_id="4" dead="false" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" gender="M"  uuid="c2482297-d022-42ae-a4b8-6f14b73f12fa"/>
   <person_name person_id="4" person_name_id="4" preferred="1" creator="1" date_created="2005-01-01 00:00:00.0" voided="false" given_name="Some" middle_name="Other" family_name="User"  uuid="6ca5379d-b9d7-4b42-b65f-cdcbc94a54dd"/>
-  <users user_id="4" person_id="4" username="2nduser" system_id="2ndusersystemid" retired="false" creator="1" date_created="2005-01-01 00:00:00.0" uuid="1ae5c06a-e136-11de-babe-001e378eb67e"/>
+  <openmrs.users user_id="4" person_id="4" username="2nduser" system_id="2ndusersystemid" retired="false" creator="1" date_created="2005-01-01 00:00:00.0" uuid="1ae5c06a-e136-11de-babe-001e378eb67e"/>
   
   <form form_id="1" name="Basic Form" version="0.1" build="0" published="0" description="Test form" creator="1" date_created="2005-08-07 00:00:00.0" changed_by="1" date_changed="2007-10-24 14:51:53.0" retired="false"  uuid="2a45c87e-e43d-42ff-83c7-e70a229fa99d"/>
   
@@ -89,6 +89,6 @@
   
   <privilege privilege="Some Privilege For View Encounter Types" description="This is a test privilege for view encounter types" uuid="d979d066-15e6-467c-9d4b-cb575ef12345"/>
   <privilege privilege="Some Privilege For Edit Encounter Types" description="This is a test privilege for edit encounter types" uuid="d979d066-15e6-467c-9d4b-cb575ef54321"/>
-  <users user_id="5506" person_id="501" system_id="7-5" username="test_user" password="4a1750c8607d0fa237de36c6305715c223415189" salt="c788c6ad82a157b712392ca695dfcf2eed193d7f" secret_question="" creator="1" date_created="2008-08-15 15:57:09.0" changed_by="1" date_changed="2008-08-18 11:51:56.0" retired="false" retire_reason="" uuid="06d05314-e132-11de-babe-001e37123456"/>
+  <openmrs.users user_id="5506" person_id="501" system_id="7-5" username="test_user" password="4a1750c8607d0fa237de36c6305715c223415189" salt="c788c6ad82a157b712392ca695dfcf2eed193d7f" secret_question="" creator="1" date_created="2008-08-15 15:57:09.0" changed_by="1" date_changed="2008-08-18 11:51:56.0" retired="false" retire_reason="" uuid="06d05314-e132-11de-babe-001e37123456"/>
 
 </dataset>

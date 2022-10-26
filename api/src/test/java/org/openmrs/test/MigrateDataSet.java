@@ -22,6 +22,7 @@ import java.sql.PreparedStatement;
 
 import javax.swing.JFileChooser;
 
+import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -109,7 +110,8 @@ public class MigrateDataSet {
 			
 			// database connection for dbunit
 			IDatabaseConnection dbunitConnection = new DatabaseConnection(con);
-
+			DatabaseConfig config = dbunitConnection.getConfig();
+			config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
 			try (InputStream fileOrDirectoryStream = new FileInputStream(fileOrDirectory)) {
 				PreparedStatement ps = con.prepareStatement("SET FOREIGN_KEY_CHECKS=0;");
 				ps.execute();
