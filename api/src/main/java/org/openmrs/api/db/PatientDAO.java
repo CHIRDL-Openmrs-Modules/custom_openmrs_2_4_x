@@ -297,4 +297,19 @@ public interface PatientDAO {
 	 */
 	public Allergy saveAllergy(Allergy allergy);
 	
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 Added to maintain previous functionality. See TRUNK-5089. There is a known issue with getPatients(String name, String identifier, List<PatientIdentifierType> identifierTypes,
+	 *       boolean matchIdentifierExactly)
+	 *
+	 * @see org.openmrs.api.PatientService#getPatientsByIdentifier(String, String, List, boolean)
+	 * @param name
+	 * @param identifier
+	 * @param identifierTypes
+	 * @param matchIdentifierExactly
+	 * @return list of Patients
+	 * @throws APIException
+	 */
+	public List<Patient> getPatientsByIdentifier(String name, String identifier,
+	        List<PatientIdentifierType> identifierTypes, boolean matchIdentifierExactly) throws DAOException;
 }

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openmrs.Cohort;
+import org.openmrs.annotation.Authorized;
 import org.openmrs.logic.datasource.LogicDataSource;
 import org.openmrs.logic.result.Result;
 import org.openmrs.logic.result.Result.Datatype;
@@ -69,6 +70,7 @@ public interface LogicService {
 	 * @return all known (registered) tokens
 	 * <strong>Should</strong> return all registered token
 	 */
+	@Authorized()
 	public List<String> getAllTokens();
 	
 	/**
@@ -80,6 +82,7 @@ public interface LogicService {
 	 * <strong>Should</strong> return all registered token matching the input partially
 	 * <strong>Should</strong> not fail when input is null
 	 */
+	@Authorized()
 	public List<String> getTokens(String partialToken);
 	
 	/**
@@ -92,6 +95,7 @@ public interface LogicService {
 	 * <strong>Should</strong> not fail when another rule is registered on the same token
 	 * <strong>Should</strong> persist the rule and associate it with the token
 	 */
+	@Authorized()
 	public void addRule(String token, Rule rule) throws LogicException;
 	
 	/**
@@ -104,6 +108,7 @@ public interface LogicService {
 	 * <strong>Should</strong> not fail when no tags is specified
 	 * <strong>Should</strong> persist rule with the tags
 	 */
+	@Authorized()
 	public void addRule(String token, String[] tags, Rule rule) throws LogicException;
 	
 	/**
@@ -116,6 +121,7 @@ public interface LogicService {
 	 * <strong>Should</strong> fail when no Rule is associated with the input token
 	 * <strong>Should</strong> return ReferenceRule
 	 */
+	@Authorized()
 	public Rule getRule(String token) throws LogicException;
 	
 	/**
@@ -126,6 +132,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * <strong>Should</strong> update Rule when another Rule is registered under the same token
 	 */
+	@Authorized()
 	public void updateRule(String token, Rule rule) throws LogicException;
 	
 	/**
@@ -135,6 +142,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * <strong>Should</strong> remove rule
 	 */
+	@Authorized()
 	public void removeRule(String token) throws LogicException;
 	
 	/**
@@ -147,6 +155,7 @@ public interface LogicService {
 	 * @see #parse(String)
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Result eval(Integer patientId, String expression) throws LogicException;
 	
 	/**
@@ -160,6 +169,7 @@ public interface LogicService {
 	 * @see #parse(String)
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Result eval(Integer patientId, String expression, Map<String, Object> parameters) throws LogicException;
 	
 	/**
@@ -171,6 +181,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Result eval(Integer patientId, LogicCriteria criteria) throws LogicException;
 	
 	/**
@@ -184,6 +195,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Result eval(Integer patientId, LogicCriteria criteria, Map<String, Object> parameters) throws LogicException;
 	
 	/**
@@ -199,6 +211,7 @@ public interface LogicService {
 	 * @see #parse(String)
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Map<String, Result> eval(Integer patientId, Map<String, Object> parameters, String... expressions)
 	        throws LogicException;
 	
@@ -214,6 +227,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * @since 1.6.3, 1.7.2, and 1.8
 	 */
+	@Authorized()
 	public Map<LogicCriteria, Result> eval(Integer patientId, Map<String, Object> parameters, LogicCriteria... criteria)
 	        throws LogicException;
 		
@@ -226,6 +240,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * @see #parse(String)
 	 */
+	@Authorized()
 	public Map<Integer, Result> eval(Cohort who, String expression) throws LogicException;
 	
 	/**
@@ -238,6 +253,7 @@ public interface LogicService {
 	 * @throws LogicException
 	 * @see #parse(String)
 	 */
+	@Authorized()
 	public Map<Integer, Result> eval(Cohort who, String expression, Map<String, Object> parameters) throws LogicException;
 	
 	/**
@@ -248,6 +264,7 @@ public interface LogicService {
 	 * @return result for each patient
 	 * @throws LogicException
 	 */
+	@Authorized()
 	public Map<Integer, Result> eval(Cohort who, LogicCriteria criteria) throws LogicException;
 	
 	/**
@@ -259,6 +276,7 @@ public interface LogicService {
 	 * @return result for each patient
 	 * @throws LogicException
 	 */
+	@Authorized()
 	public Map<Integer, Result> eval(Cohort who, LogicCriteria criteria, Map<String, Object> parameters)
 	        throws LogicException;
 	
@@ -270,7 +288,7 @@ public interface LogicService {
 	 * @return results for each patient
 	 * @throws LogicException
 	 */
-	
+	@Authorized()
 	public Map<LogicCriteria, Map<Integer, Result>> eval(Cohort who, List<LogicCriteria> criterias) throws LogicException;
 	
 	/**
@@ -280,6 +298,7 @@ public interface LogicService {
 	 * @param tag
 	 * <strong>Should</strong> add tag for a token
 	 */
+	@Authorized()
 	public void addTokenTag(String token, String tag);
 	
 	/**
@@ -289,6 +308,7 @@ public interface LogicService {
 	 * @param tag
 	 * <strong>Should</strong> remove tag from a token
 	 */
+	@Authorized()
 	public void removeTokenTag(String token, String tag);
 	
 	/**
@@ -298,6 +318,7 @@ public interface LogicService {
 	 * @return collection of tags
 	 * <strong>Should</strong> return set of tags for a certain token
 	 */
+	@Authorized()
 	public Set<String> getTokenTags(String token);
 	
 	/**
@@ -307,6 +328,7 @@ public interface LogicService {
 	 * @return collection of tokens
 	 * <strong>Should</strong> return set of token associated with a tag
 	 */
+	@Authorized()
 	public List<String> getTokensWithTag(String tag);
 	
 	/**
@@ -316,6 +338,7 @@ public interface LogicService {
 	 * @return collection of tags
 	 * <strong>Should</strong> return set of tags matching input tag partially
 	 */
+	@Authorized()
 	public List<String> getTags(String partialTag);
 	
 	/**
@@ -327,6 +350,7 @@ public interface LogicService {
 	 * @param token token to look the datatype up for
 	 * @return datatype of the given token
 	 */
+	@Authorized()
 	public Datatype getDefaultDatatype(String token);
 	
 	/**
@@ -334,6 +358,7 @@ public interface LogicService {
 	 * 
 	 * @return list of parameters
 	 */
+	@Authorized()
 	public Set<RuleParameterInfo> getParameterList(String token);
 		
 	/**
@@ -341,6 +366,7 @@ public interface LogicService {
 	 * 
 	 * @return all registered logic data sources
 	 */
+	@Authorized()
 	public Map<String, LogicDataSource> getLogicDataSources();
 		
 	/**
@@ -350,6 +376,7 @@ public interface LogicService {
 	 * @return the logic data source with the given name or <code>null</code> if there is no data
 	 *         source registered under the given name (must be an exact match)
 	 */
+	@Authorized()
 	public LogicDataSource getLogicDataSource(String name);
 	
 	/**
@@ -361,6 +388,7 @@ public interface LogicService {
 	 * @param criteria LogicCriteria expression in a plain String object.
 	 * @return LogicCriteria using all possible operand and operator from the String input
 	 */
+	@Authorized()
 	public LogicCriteria parse(String criteria);
 	
 }

@@ -107,18 +107,36 @@ public class UserContext implements Serializable {
 	public Authenticated authenticate(Credentials credentials)
 			throws ContextAuthenticationException {
 
-		log.debug("Authenticating client '" + credentials.getClientName() + "' with sheme: " + credentials.getAuthenticationScheme());
+		return authenticate(credentials, null, null);
+	}
+	
+	/**
+	 * Authenticate user with the provided credentials. The authentication scheme must be Spring wired, see {@link Context#getAuthenticationScheme()}.
+	 * 
+	 * @param credentials The credentials to use to authenticate
+	 * @param ipAddress The user's IP address
+	 * @param userAgent The user's user agent
+	 * @return The authenticated client information
+	 * @throws ContextAuthenticationException
+	 * 
+	 * @since 2.3.0
+	 */
+	public Authenticated authenticate(Credentials credentials, String ipAddress, String userAgent)
+			throws ContextAuthenticationException {
+
+		log.debug("Authenticating client '" + credentials.getClientName() + "', IP address: " + ipAddress 
+			+ ", user agent: " + userAgent + " with sheme: " + credentials.getAuthenticationScheme());
 
 		Authenticated authenticated = null;
 		try {
 			authenticated = authenticationScheme.authenticate(credentials);
 			this.user = authenticated.getUser();
-			notifyUserSessionListener(this.user, Event.LOGIN, Status.SUCCESS);
+			notifyUserSessionListener(this.user, Event.LOGIN, Status.SUCCESS, ipAddress, userAgent);
 		}
 		catch(ContextAuthenticationException e) {
 			User loggingInUser = new User();
 			loggingInUser.setUsername(credentials.getClientName());
-			notifyUserSessionListener(loggingInUser, Event.LOGIN, Status.FAIL);
+			notifyUserSessionListener(loggingInUser, Event.LOGIN, Status.FAIL, ipAddress, userAgent);
 			throw e;
 		}
 		
@@ -207,8 +225,19 @@ public class UserContext implements Serializable {
 	 * @see #authenticate
 	 */
 	public void logout() {
+		logout(null, null);
+	}
+	
+	/**
+	 * logs out the "active" (authenticated) user within this UserContext
+	 *
+	 * @see #authenticate
+	 * @param ipAddress The IP address of the logout command
+	 * @param userAgent The user agent of the logout command
+	 */
+	public void logout(String ipAddress, String userAgent) {
 		log.debug("setting user to null on logout");
-		notifyUserSessionListener(user, Event.LOGOUT, Status.SUCCESS);
+		notifyUserSessionListener(user, Event.LOGOUT, Status.SUCCESS, ipAddress, userAgent);
 		user = null;
 	}
 	
@@ -476,9 +505,9 @@ public class UserContext implements Serializable {
 	    }
     }
 	
-    private void notifyUserSessionListener(User user, Event event, Status status) {
+    private void notifyUserSessionListener(User user, Event event, Status status, String ipAddress, String userAgent) {
 	    for(UserSessionListener userSessionListener : Context.getRegisteredComponents(UserSessionListener.class)) {
-		    userSessionListener.loggedInOrOut(user, event, status);
+		    userSessionListener.loggedInOrOut(user, event, status, ipAddress, userAgent);
 	    }
     }
 }

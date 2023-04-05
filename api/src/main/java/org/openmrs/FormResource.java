@@ -11,11 +11,12 @@ package org.openmrs;
 
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.openmrs.customdatatype.CustomDatatypeUtil;
 import org.openmrs.customdatatype.CustomValueDescriptor;
 import org.openmrs.customdatatype.NotYetPersistedException;
 import org.openmrs.customdatatype.SingleCustomValue;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A FormResource is meant as a way for modules to add arbitrary information to

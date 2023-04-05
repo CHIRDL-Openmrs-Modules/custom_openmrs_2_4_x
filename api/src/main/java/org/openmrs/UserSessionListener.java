@@ -14,14 +14,15 @@ import org.openmrs.api.context.Context;
 /**
  * Allows tracking down both login and logout events including their status
  * 
- * Beans implementing this class are picked up by {@link Context#logout()} and
- * {@link Context#authenticate(String, String)}
+ * Beans implementing this class are picked up by {@link Context#logout()},
+ * {@link Context#authenticate(String, String)}, and {@link Context#authenticate(String, String, String, String)}
  * 
  * @since 2.2
  */
 public interface UserSessionListener {
 
 	public void loggedInOrOut(User user, Event event, Status status);
+	public void loggedInOrOut(User user, Event event, Status status, String ipAddress, String userAgent);
 
 	public enum Event {
 		LOGIN, LOGOUT

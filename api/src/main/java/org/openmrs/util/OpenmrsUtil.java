@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -2260,6 +2261,53 @@ public class OpenmrsUtil {
 	 */
 	public static Set<String> getDeclaredFields(Class<?> clazz) {
 		return Arrays.stream(clazz.getDeclaredFields()).map(Field::getName).collect(Collectors.toSet());
+	}
+
+	public static File getApplicationDataDirectoryAsFile() {
+		String filepath = null;
+		final String openmrsDir = "OpenMRS";
+		
+		String systemProperty = System.getProperty(OpenmrsConstants.KEY_OPENMRS_APPLICATION_DATA_DIRECTORY);
+		//System and runtime property take precedence
+		if (StringUtils.isNotBlank(systemProperty)) {
+			filepath = systemProperty;
+		} else {
+			String runtimeProperty = Context.getRuntimeProperties()
+				.getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY, null);
+			if (StringUtils.isNotBlank(runtimeProperty)) {
+				filepath = runtimeProperty;
+			}
+		}
+		
+		if (filepath == null) {
+			if (OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM) {
+				filepath = Paths.get(System.getProperty("user.home"), "." + openmrsDir).toString();
+				if (!canWrite(new File(filepath))) {
+					log.warn("Unable to write to users home dir, fallback to: "
+						+ OpenmrsConstants.APPLICATION_DATA_DIRECTORY_FALLBACK_UNIX);
+					filepath = Paths.get(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_FALLBACK_UNIX, openmrsDir).toString();
+				}
+			} else {
+				filepath = Paths.get(System.getProperty("user.home"), "Application Data", "OpenMRS").toString();
+				if (!new File(filepath).exists()) {
+					filepath = Paths.get(System.getenv("appdata"), "OpenMRS").toString();
+				}
+				if (!canWrite(new File(filepath))) {
+					log.warn("Unable to write to users home dir, fallback to: "
+						+ OpenmrsConstants.APPLICATION_DATA_DIRECTORY_FALLBACK_WIN);
+					filepath = OpenmrsConstants.APPLICATION_DATA_DIRECTORY_FALLBACK_WIN + File.separator + openmrsDir;
+				}
+			}
+			
+			filepath = filepath + File.separator;
+		}
+		
+		File folder = new File(filepath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		return folder;
 	}
 	
 }

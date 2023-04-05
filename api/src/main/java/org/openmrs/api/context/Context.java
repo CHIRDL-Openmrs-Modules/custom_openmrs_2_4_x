@@ -321,7 +321,29 @@ public class Context {
 	 */
 	@Deprecated
 	public static void authenticate(String username, String password) throws ContextAuthenticationException {
-		authenticate(new UsernamePasswordCredentials(username, password));
+		authenticate(username, password, null, null);
+	}
+	
+	/**
+	 * @deprecated as of 2.3.0, replaced by {@link #authenticate(Credentials, String, String)}
+	 * 
+	 * Used to authenticate user within the context
+	 * 
+	 * @param username user's identifier token for login
+	 * @param password user's password for authenticating to context
+	 * @param ipAddress user's IP address
+	 * @param userAgent user's user agent
+	 * @throws ContextAuthenticationException
+	 * @should not authenticate with null username and password
+	 * @should not authenticate with null password
+	 * @should not authenticate with null username
+	 * @should not authenticate with null password and proper username
+	 * @should not authenticate with null password and proper system id
+	 */
+	@Deprecated
+	public static void authenticate(String username, String password, String ipAddress, String userAgent) 
+			throws ContextAuthenticationException {
+		authenticate(new UsernamePasswordCredentials(username, password), ipAddress, userAgent);
 	}
 
 	/**
@@ -331,6 +353,20 @@ public class Context {
 	 * @since 2.3.0
 	 */
 	public static Authenticated authenticate(Credentials credentials) throws ContextAuthenticationException {
+
+		return authenticate(credentials, null, null);
+	}
+	
+	/**
+	 * @param credentials
+	 * @param ipAddress user's IP address
+	 * @param userAgent user's user agent
+	 * @throws ContextAuthenticationException
+	 * 
+	 * @since 2.3.0
+	 */
+	public static Authenticated authenticate(Credentials credentials, String ipAddress, String userAgent) 
+			throws ContextAuthenticationException {
 
 		if (Daemon.isDaemonThread()) {
 			log.error("Authentication attempted while operating on a "
@@ -342,7 +378,7 @@ public class Context {
 			throw new ContextAuthenticationException("Context cannot authenticate with null credentials.");
 		}
 
-		return getUserContext().authenticate(credentials);
+		return getUserContext().authenticate(credentials, ipAddress, userAgent);
 	}
 
 	/**
@@ -603,6 +639,7 @@ public class Context {
 					props.setProperty("mail.from", adminService.getGlobalProperty("mail.from"));
 					props.setProperty("mail.debug", adminService.getGlobalProperty("mail.debug"));
 					props.setProperty("mail.smtp.auth", adminService.getGlobalProperty("mail.smtp_auth"));
+					props.setProperty("mail.smtp.ssl.protocols", adminService.getGlobalProperty("mail.smtp_ssl_protocols"));
 					props.setProperty(OpenmrsConstants.GP_MAIL_SMTP_STARTTLS_ENABLE, adminService.getGlobalProperty(OpenmrsConstants.GP_MAIL_SMTP_STARTTLS_ENABLE));
 
 					Authenticator auth = new Authenticator() {
@@ -671,12 +708,24 @@ public class Context {
 	 * <strong>Should</strong> not fail if session hasn't been opened yet
 	 */
 	public static void logout() {
+		logout(null, null);
+	}
+	
+	/**
+	 * logs out the "active" (authenticated) user within context
+	 * 
+	 * @see #authenticate
+	 * @should not fail if session hasnt been opened yet
+	 * @param ipAddress The IP address of the logout command
+	 * @param userAgent The user agent of the logout command
+	 */
+	public static void logout(String ipAddress, String userAgent) {
 		if (!isSessionOpen()) {
 			return; // fail early if there isn't even a session open
 		}
 		log.debug("Logging out : {}", getAuthenticatedUser());
 
-		getUserContext().logout();
+		getUserContext().logout(ipAddress, userAgent);
 
 		// reset the UserContext object (usually cleared out by closeSession()
 		// soon after this)

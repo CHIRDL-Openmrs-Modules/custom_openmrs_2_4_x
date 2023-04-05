@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Boost;
 import org.hibernate.search.annotations.DocumentId;
@@ -35,6 +34,8 @@ import org.openmrs.util.OpenmrsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Person can have zero to n PersonName(s).

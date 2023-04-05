@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to safely catch velocity exceptions
  */
-public class VelocityExceptionHandler implements MethodExceptionEventHandler {
+public abstract class VelocityExceptionHandler implements MethodExceptionEventHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(VelocityExceptionHandler.class);
 	
@@ -29,7 +29,6 @@ public class VelocityExceptionHandler implements MethodExceptionEventHandler {
 	 * @see org.apache.velocity.app.event.MethodExceptionEventHandler#methodException(java.lang.Class,
 	 *      java.lang.String, java.lang.Exception)
 	 */
-	@Override
 	public Object methodException(Class claz, String method, Exception e) throws Exception {
 		
 		log.debug("Claz: " + claz.getName() + " method: " + method, e);

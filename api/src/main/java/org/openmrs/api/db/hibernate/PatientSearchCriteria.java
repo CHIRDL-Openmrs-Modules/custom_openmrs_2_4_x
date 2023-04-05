@@ -612,4 +612,199 @@ public class PatientSearchCriteria {
 		
 		return conjunction;
 	}
+	
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Prepare a hibernate criteria using the patient identifier.
+	 * 
+	 * @param name
+	 * @param identifier
+	 * @param identifierTypes
+	 * @param matchIdentifierExactly
+	 * @return {@link Criteria}
+	 */
+	public Criteria prepareCriteria(String name, String identifier, List<PatientIdentifierType> identifierTypes,
+	        boolean matchIdentifierExactly) {
+		name = HibernateUtil.escapeSqlWildcards(name, sessionFactory);
+		identifier = HibernateUtil.escapeSqlWildcards(identifier, sessionFactory);
+
+		criteria.createAlias("names", "name");
+		criteria.addOrder(Order.asc("name.givenName"));
+		criteria.addOrder(Order.asc("name.middleName"));
+		criteria.addOrder(Order.asc("name.familyName"));
+
+		// get only distinct patients
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+		if (name != null) {
+			addNameCriterias(criteria, name);
+		}
+
+		// do the restriction on either identifier string or types
+		if (identifier != null || identifierTypes.size() > 0) {
+			addIdentifierCriterias(criteria, identifier, identifierTypes, matchIdentifierExactly);
+		}
+
+		// make sure the patient object isn't voided
+		criteria.add(Restrictions.eq("voided", false));
+
+		return criteria;
+	}
+
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Utility method to add name expressions to criteria.
+	 * 
+	 * @param criteria
+	 * @param name
+	 */
+	private void addNameCriterias(Criteria criteria, String name) {
+		name = name.replaceAll("  ", " ");
+		name = name.replace(", ", " ");
+		String[] names = name.split(" ");
+
+		String nameSoFar = names[0];
+		for (int i = 0; i < names.length; i++) {
+			String n = names[i];
+			if (n != null && n.length() > 0) {
+				LogicalExpression oneNameSearch = getNameSearch(n);
+				LogicalExpression searchExpression = oneNameSearch;
+				if (i > 0) {
+					nameSoFar += " " + n;
+					LogicalExpression fullNameSearch = getNameSearch(nameSoFar);
+					searchExpression = Restrictions.or(oneNameSearch, fullNameSearch);
+				}
+				criteria.add(searchExpression);
+			}
+		}
+	}
+
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Returns a criteria object comparing the given string to each part of the name. <br/>
+	 * <br/>
+	 * This criteria is essentially:
+	 * <p/>
+	 * 
+	 * <pre>
+	 * ... where voided = false &amp;&amp; name in (familyName2, familyName, middleName, givenName)
+	 * </pre>
+	 * 
+	 * @param name
+	 * @return {@link LogicalExpression}
+	 */
+	private LogicalExpression getNameSearch(String name) {
+
+		MatchMode mode = MatchMode.START;
+		String matchModeConstant = OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE;
+		String modeGp = Context.getAdministrationService().getGlobalProperty(matchModeConstant);
+		if (OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_ANYWHERE.equalsIgnoreCase(modeGp)) {
+			mode = MatchMode.ANYWHERE;
+		}
+		SimpleExpression givenName = Restrictions.like("name.givenName", name, mode);
+		SimpleExpression middleName = Restrictions.like("name.middleName", name, mode);
+		SimpleExpression familyName = Restrictions.like("name.familyName", name, mode);
+		SimpleExpression familyName2 = Restrictions.like("name.familyName2", name, mode);
+
+		return Restrictions.and(Restrictions.eq("name.voided", false), Restrictions.or(familyName2, Restrictions.or(
+		    familyName, Restrictions.or(middleName, givenName))));
+	}
+
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Utility method to add identifier expression to an existing criteria
+	 * 
+	 * @param criteria
+	 * @param identifier
+	 * @param identifierTypes
+	 * @param matchIdentifierExactly
+	 */
+	private void addIdentifierCriterias(Criteria criteria, String identifier, List<PatientIdentifierType> identifierTypes,
+	        boolean matchIdentifierExactly) {
+		// add the join on the identifiers table
+		criteria.createAlias("identifiers", "ids");
+		criteria.add(Restrictions.eq("ids.voided", false));
+
+		// do the identifier restriction
+		if (identifier != null) {
+			// if the user wants an exact search, match on that.
+			if (matchIdentifierExactly) {
+				criteria.add(Restrictions.eq("ids.identifier", identifier));
+			} else {
+				AdministrationService adminService = Context.getAdministrationService();
+				String regex = adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX, "");
+				String patternSearch = adminService.getGlobalProperty(
+				    OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SEARCH_PATTERN, "");
+
+				// remove padding from identifier search string
+				if (Pattern.matches("^\\^.{1}\\*.*$", regex)) {
+					identifier = removePadding(identifier, regex);
+				}
+
+				if (!StringUtils.isEmpty(patternSearch)) {
+					splitAndAddSearchPattern(criteria, identifier, patternSearch);
+				}
+				// if the regex is empty, default to a simple "like" search or if
+				// we're in hsql world, also only do the simple like search (because
+				// hsql doesn't know how to deal with 'regexp'
+				else if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+					addCriterionForSimpleSearch(criteria, identifier, adminService);
+				}
+				// if the regex is present, search on that
+				else {
+					regex = replaceSearchString(regex, identifier);
+					criteria.add(Restrictions.sqlRestriction("identifier regexp ?", regex, StringType.INSTANCE));
+				}
+			}
+		}
+
+		// do the type restriction
+		if (identifierTypes.size() > 0) {
+			criteria.add(Restrictions.in("ids.identifierType", identifierTypes));
+		}
+	}
+
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Utility method to add prefix and suffix like expression
+	 * 
+	 * @param criteria
+	 * @param identifier
+	 * @param adminService
+	 */
+	private void addCriterionForSimpleSearch(Criteria criteria, String identifier, AdministrationService adminService) {
+		String prefix = adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_PREFIX, "");
+		String suffix = adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX, "");
+		StringBuffer likeString = new StringBuffer(prefix).append(identifier).append(suffix);
+		criteria.add(Restrictions.like("ids.identifier", likeString.toString()));
+	}
+
+	/**
+	 * CHICA-1151 Moving the same fix that we added in version 1.12 to this version because the ticket below still hasn't been fixed
+	 * CHICA-977 This is the original code from version 1.7.x and has been copied and added here to as a temporary solution to
+	 * TRUNK-5089
+	 * Utility method to add search pattern expression to identifier.
+	 * 
+	 * @param criteria
+	 * @param identifier
+	 * @param patternSearch
+	 */
+	private void splitAndAddSearchPattern(Criteria criteria, String identifier, String patternSearch) {
+		// split the pattern before replacing in case the user searched on a comma
+		List<String> searchPatterns = new ArrayList<String>();
+		// replace the @SEARCH@, etc in all elements
+		for (String pattern : patternSearch.split(","))
+			searchPatterns.add(replaceSearchString(pattern, identifier));
+		criteria.add(Restrictions.in("ids.identifier", searchPatterns));
+	}
 }
