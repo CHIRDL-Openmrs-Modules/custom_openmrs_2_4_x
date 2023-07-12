@@ -8,7 +8,7 @@
     graphic logo is a trademark of OpenMRS Inc.
 ====
 
-jquery.min.js is version 1.7.1
+jquery.min.js is version 3.6.4
 
 Dropping the version number from the filename allows modules to generically
 reference jquery.min.js in trunk, and not worry about breaking if we change
