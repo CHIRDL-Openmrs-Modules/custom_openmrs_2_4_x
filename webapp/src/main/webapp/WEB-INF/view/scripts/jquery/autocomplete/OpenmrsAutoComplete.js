@@ -219,11 +219,12 @@ function CreateCallback(options) {
 		// item is a PersonListItem object
 		var imageText = "";
 		if (person.gender == 'M')
-			imageText = "<span class='male'>&#9794;</span>"; //<img style='height: 1em' src='" + openmrsContextPath + "/images/male.gif'/>";
+            imageText = "<span class='male'>&#9794;</span>"; 
 		else if (person.gender == "F")
-			imageText = "<span class='female'>&#9792;</span>"; //"<img style='height: 1em' src='" + openmrsContextPath + "/images/female.gif'/>"
-		//else
-		//	imageText = "?";
+            imageText = "<span class='female'>&#9792;</span>"; 
+		else
+            imageText = "<span> &#9900;</span>"; 
+    
 		
 		// adding space here for both the regexp matching and the gap
 		// between the image and the identifier
@@ -292,8 +293,8 @@ function CreateCallback(options) {
 		
 		var value = item.name;
 		if (item.preferredName) {
-			textShown += "<span class='preferredname'> &rArr; " + item.preferredName + "</span>";
-			//value = item.preferredName;
+		  textShown += "<span class='preferredname'> &rArr; " + item.preferredName + "</span>";
+			value = item.preferredName;
 		}
 		
 		textShown = "<span class='autocompleteresult'>" + textShown + "</span>";
