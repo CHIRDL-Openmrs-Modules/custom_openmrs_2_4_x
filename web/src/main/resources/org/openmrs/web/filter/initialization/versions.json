@@ -1,0 +1,8 @@
+{
+  "versions":[
+    {
+        "jquery":"jquery-3.6.4.min.js",
+        "jquerui": "jqueryui=1.13.2.min.js"
+    }
+  ]
+}

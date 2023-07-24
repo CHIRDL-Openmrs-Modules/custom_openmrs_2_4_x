@@ -36,7 +36,7 @@
 	</bean>
 
 	<util:map id="urlRewrites">
-        
+     <!--     <entry key="initfilter/scripts/jquery/jquery.min.js" value="/scripts/jquery/jquery-3.6.4.min.js"/> -->
         <entry key="/scripts/jquery/jquery.min.js" value="/scripts/jquery/jquery-3.6.4.min.js"/>
         <entry key="/scripts/jquery-ui/css/jquery-ui.min.css" value="/scripts/jquery-ui/css/jquery-ui-1.13.2.min.css"/>
         <entry key="/scripts/jquery-ui/js/jquery-ui.min.js"  value="/scripts/jquery-ui/js/jquery-ui-1.13.2.min.js"/>

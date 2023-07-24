@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script type="text/javascript" src="initfilter/scripts/jquery/jquery.min.js"></script>
+
 	<script type="text/javascript" src="initfilter/scripts/initialsetup.js"></script>
     <link type="text/css" rel="stylesheet" href="initfilter/scripts/jquery-ui/css/orange/jquery-ui.custom.css" />
     

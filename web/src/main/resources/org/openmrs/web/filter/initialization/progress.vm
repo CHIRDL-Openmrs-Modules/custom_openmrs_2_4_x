@@ -1,5 +1,8 @@
 #parse($headerTemplate)
-<script type="text/javascript" src="initfilter/scripts/jquery-ui/js/jquery-ui.min.js"></script>
+    
+<script ype="text/javascript" src="versions.js"></script>
+<script type="text/javascript" src="initfilter/scripts/jquery/jquery-3.6.4.min.js"></script>
+<script type="text/javascript" src="initfilter/scripts/jquery-ui/js/jquery-ui-1.13.2.min.js"></script>
 <link href="initfilter/scripts/jquery-ui/css/orange/jquery-ui.custom.css" rel="stylesheet" type="text/css"/>
 	<script>		
 		var updateTimer = null;
@@ -20,7 +23,9 @@
 					//i.e if the progress was 98% and this time round, we have moved to the next task, 
 					//mark the task as complete
 					if(data.executedTasks){
+				
 						for(var i = 0; i < data.executedTasks.length ; i++){
+						  
 							if(jQuery("#"+data.executedTasks[i]+"_task_loading").is(':visible'))
 								jQuery("#"+data.executedTasks[i]+"_task_loading").hide();
 							if(!jQuery("#"+data.executedTasks[i]+"_task_checkmark").is(':visible'))
@@ -34,6 +39,7 @@
 								//show and initialize the progress bar the first time it is updated, if the task takes a short
 								//time to execute it is possible that its progress bar was never shown at all since it was 
 								//never returned as the executing task.
+								jQuery("#"+data.executedTasks[i]+"_progressbar").progressbar();
 								if(jQuery("#"+data.executedTasks[i]+"_progressbar").progressbar("option", "disabled"))
 									jQuery("#"+data.executedTasks[i]+"_progressbar").progressbar({ disabled : false});
 									
@@ -58,6 +64,7 @@
 						//set the progress bar value if task has progress bar
 						if(jQuery("#"+data.executingTask+"_progressbar")){				
 							//show and initialize the progress bar the first time it is updated
+							jQuery("#"+data.executingTask+"_progressbar").progressbar();
 							if(jQuery("#"+data.executingTask+"_progressbar").progressbar("option", "disabled"))
 								jQuery("#"+data.executingTask+"_progressbar").progressbar({ disabled : false});
 							//To ensure that last progress bar shows a maximum of 99%
@@ -92,6 +99,7 @@
 		//Updates the current progress with the new percentage value from the server
 		function updateProgressBar(progressBarId, completedPercentage){
 			var newPercentage = Number(completedPercentage);
+			jQuery("#"+progressBarId+"_progressbar").progressbar();
 			var currentValue = jQuery("#"+progressBarId+"_progressbar").progressbar("option","value");
 			
 			//guarantee that the bar never loads backwards in case we get bad responses from the server
@@ -104,8 +112,9 @@
 		
 		//Updates the current progress bar with a smoother animation by breaking the changes
 		//into smaller units of 1 that take place in smaller time intervals.
-		function updateSmoothly(progressBarId, newPercentage){			
-			var currentPercentage = jQuery("#"+progressBarId+"_progressbar").progressbar("option","value");
+		function updateSmoothly(progressBarId, newPercentage){	
+		jQuery("#"+progressBarId+"_progressbar").progressbar();		
+		 var currentPercentage = jQuery("#"+progressBarId+"_progressbar").progressbar("option","value");
 			
 			//dont go over new Percentage and 100 in case we get bad responses from the server
 			if(currentPercentage < newPercentage && currentPercentage < 100){
