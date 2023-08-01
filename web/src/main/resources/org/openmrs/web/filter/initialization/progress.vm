@@ -1,9 +1,6 @@
 #parse($headerTemplate)
-    
-<script ype="text/javascript" src="versions.js"></script>
-<script type="text/javascript" src="initfilter/scripts/jquery/jquery-3.6.4.min.js"></script>
-<script type="text/javascript" src="initfilter/scripts/jquery-ui/js/jquery-ui-1.13.2.min.js"></script>
-<link href="initfilter/scripts/jquery-ui/css/orange/jquery-ui.custom.css" rel="stylesheet" type="text/css"/>
+#parse($includeTemplate)
+
 	<script>		
 		var updateTimer = null;
 		function showProgress() {
@@ -23,9 +20,7 @@
 					//i.e if the progress was 98% and this time round, we have moved to the next task, 
 					//mark the task as complete
 					if(data.executedTasks){
-				
 						for(var i = 0; i < data.executedTasks.length ; i++){
-						  
 							if(jQuery("#"+data.executedTasks[i]+"_task_loading").is(':visible'))
 								jQuery("#"+data.executedTasks[i]+"_task_loading").hide();
 							if(!jQuery("#"+data.executedTasks[i]+"_task_checkmark").is(':visible'))
@@ -113,8 +108,8 @@
 		//Updates the current progress bar with a smoother animation by breaking the changes
 		//into smaller units of 1 that take place in smaller time intervals.
 		function updateSmoothly(progressBarId, newPercentage){	
-		jQuery("#"+progressBarId+"_progressbar").progressbar();		
-		 var currentPercentage = jQuery("#"+progressBarId+"_progressbar").progressbar("option","value");
+			jQuery("#"+progressBarId+"_progressbar").progressbar();		
+		 	var currentPercentage = jQuery("#"+progressBarId+"_progressbar").progressbar("option","value");
 			
 			//dont go over new Percentage and 100 in case we get bad responses from the server
 			if(currentPercentage < newPercentage && currentPercentage < 100){

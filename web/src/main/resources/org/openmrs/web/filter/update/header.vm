@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script type="text/javascript" src="initfilter/scripts/jquery/jquery.min.js"></script>
+    #parse($includeTemplate)
     <script type="text/javascript" src="initfilter/scripts/initialsetup.js"></script>
 
     <style type="text/css" media="all">
