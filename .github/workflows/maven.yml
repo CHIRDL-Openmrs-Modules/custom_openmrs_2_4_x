@@ -29,7 +29,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Setup Maven settings.xml
-      uses: whelk-io/maven-settings-xml-action@v11
+      uses: whelk-io/maven-settings-xml-action@v14
       with:
         repositories: >
           [
@@ -44,7 +44,7 @@ jobs:
             {
               "id": "openmrs-repo",
               "name": "OpenMRS Nexus Repository",
-              "url": "https://openmrs.jfrog.io/openmrs/public",
+              "url": "https://openmrs.jfrog.io/openmrs/public/",
               "snapshots": {
                 "enabled": "false"
               }
@@ -54,18 +54,18 @@ jobs:
           [
              {
                 "id": "chirdl-repo",
-                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
-                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+                "username": "${{secrets.ARTIFACTORY_USERNAME_REF}}",
+                "password": "${{secrets.ARTIFACTORY_PASSWORD_REF}}"
               },
               {
                 "id": "chirdl-repo-releases",
-                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
-                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+                "username": "${{secrets.ARTIFACTORY_USERNAME_REF}}",
+                "password": "${{secrets.ARTIFACTORY_PASSWORD_REF}}"
               },
               {
                 "id": "chirdl-repo-snapshots",
-                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
-                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+                "username": "${{secrets.ARTIFACTORY_USERNAME_REF}}",
+                "password": "${{secrets.ARTIFACTORY_PASSWORD_REF}}"
               },
               {
                 "id": "FTP-SERVER",
@@ -77,17 +77,17 @@ jobs:
           [
             {
               "id": "OpenMRS",
+              "activation": {
+                "activeByDefault": "true"
+              },
               "properties": {
                 "archetypeCatalog": "http://mavenrepo.openmrs.org/nexus/content/repositories/public/archetype-catalog.xml",
                 "archetypeRepository": "http://mavenrepo.openmrs.org/nexus/content/repositories/public"
               },
-              "activation": {
-                "activeByDefault": "true"
-              },
               "repositories": {
-                "id": "openmrs-repo",
-                "name": "OpenMRS Nexus Repository",
-                "url": "https://openmrs.jfrog.io/openmrs/public/"
+                  "id": "openmrs-repo",
+                  "name": "OpenMRS Nexus Repository",
+                  "url": "https://openmrs.jfrog.io/openmrs/public/"
               }
             }
           ]
