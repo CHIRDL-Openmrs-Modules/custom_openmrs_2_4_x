@@ -28,8 +28,34 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
+    - name: Setup Maven settings.xml
+      uses: whelk-io/maven-settings-xml-action@v11
+      with:
+        servers: |
+          '[
+             {
+                "id": "chirdl-repo",
+                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
+                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+              },
+              {
+                "id": "chirdl-repo-releases",
+                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
+                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+              },
+              {
+                "id": "chirdl-repo-snapshots",
+                "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
+                "password": "${secrets.ARTIFACTORY_PASSWORD_REF}"
+              },
+              {
+                "id": "FTP-SERVER",
+                "username": "anonymous",
+                "password": ""
+              }
+          ]'
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B deploy --file pom.xml
     - name: Copy artifacts
       run: mkdir staging && cp target/*.jar staging && cp tools/target/*.jar staging && cp test/target/*.jar staging && cp api/target/*.jar staging && cp webapp/target/*.war staging && cp webapp/target/*.jar staging && cp web/target/*.jar staging
     - name: Upload artifacts
