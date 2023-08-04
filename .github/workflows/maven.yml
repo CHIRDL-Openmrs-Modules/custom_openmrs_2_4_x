@@ -36,7 +36,7 @@ jobs:
             {
               "id": "openmrs-repo",
               "name": "OpenMRS Nexus Repository",
-              "url": "https://openmrs.jfrog.io/openmrs/public/",
+              "url": "https://openmrs.jfrog.io/openmrs/public/"
             }
           ]
         plugin_repositories: >
