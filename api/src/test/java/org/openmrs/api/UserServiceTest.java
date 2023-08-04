@@ -674,7 +674,6 @@ public class UserServiceTest extends BaseContextSensitiveTest {
 	 * @see UserService#getAllUsers()
 	 */
 	@Test
-	@Disabled
 	public void getAllUsers_shouldNotContainsAnyDuplicateUsers() {
 		executeDataSet(XML_FILENAME);
 		List<User> users = userService.getAllUsers();
