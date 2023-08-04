@@ -38,9 +38,9 @@
 	</organization>
   
     <scm>
-        <connection>scm:git:git@github.iu.edu:CHIRDL/custom_openmrs_2_4_x.git</connection>
-        <developerConnection>scm:git:git@github.iu.edu:CHIRDL/custom_openmrs_2_4_x.git</developerConnection>
-        <url>https://github.iu.edu/CHIRDL/custom_openmrs_2_4_x</url>
+        <connection>scm:git:git@github.com:CHIRDL-Openmrs-Modules/custom_openmrs_2_4_x.git</connection>
+        <developerConnection>scm:git:git@github.com:CHIRDL-Openmrs-Modules/custom_openmrs_2_4_x.git</developerConnection>
+        <url>https://github.com/CHIRDL-Openmrs-Modules/custom_openmrs_2_4_x</url>
         <tag>HEAD</tag>
     </scm>
 
