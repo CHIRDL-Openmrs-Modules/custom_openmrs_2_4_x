@@ -31,8 +31,27 @@ jobs:
     - name: Setup Maven settings.xml
       uses: whelk-io/maven-settings-xml-action@v11
       with:
-        servers: |
-          '[
+        repositories: >
+          [
+            {
+              "id": "openmrs-repo",
+              "name": "OpenMRS Nexus Repository",
+              "url": "https://openmrs.jfrog.io/openmrs/public/",
+            }
+          ]
+        plugin_repositories: >
+          [
+            {
+              "id": "openmrs-repo",
+              "name": "OpenMRS Nexus Repository",
+              "url": "https://openmrs.jfrog.io/openmrs/public",
+              "snapshots": {
+                "enabled": "false"
+              }
+            }
+          ]
+        servers: >
+          [
              {
                 "id": "chirdl-repo",
                 "username": "${secrets.ARTIFACTORY_USERNAME_REF}",
@@ -53,7 +72,29 @@ jobs:
                 "username": "anonymous",
                 "password": ""
               }
-          ]'
+          ]
+        profiles: >
+          [
+            {
+              "id": "OpenMRS",
+              "properties": {
+                "archetypeCatalog": "http://mavenrepo.openmrs.org/nexus/content/repositories/public/archetype-catalog.xml",
+                "archetypeRepository": "http://mavenrepo.openmrs.org/nexus/content/repositories/public"
+              },
+              "activation": {
+                "activeByDefault": "true"
+              },
+              "repositories": {
+                "id": "openmrs-repo",
+                "name": "OpenMRS Nexus Repository",
+                "url": "https://openmrs.jfrog.io/openmrs/public/"
+              }
+            }
+          ]
+        plugin_groups: >
+          [
+            "org.openmrs.maven.plugins"
+          ]
     - name: Build with Maven
       run: mvn -B deploy --file pom.xml
     - name: Copy artifacts
