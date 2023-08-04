@@ -1,6 +1,4 @@
 #parse($headerTemplate)
-#parse($includeTemplate)
-
 	<script>		
 		var updateTimer = null;
 		function showProgress() {

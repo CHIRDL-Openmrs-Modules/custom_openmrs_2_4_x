@@ -1,5 +1,4 @@
 #parse($headerTemplate)
-#parse($includeTemplate)
 
 <script>
 	var lastIndex = 0;
