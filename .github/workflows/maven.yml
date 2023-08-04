@@ -44,7 +44,7 @@ jobs:
             {
               "id": "openmrs-repo",
               "name": "OpenMRS Nexus Repository",
-              "url": "https://openmrs.jfrog.io/openmrs/public",
+              "url": "https://openmrs.jfrog.io/openmrs/public/",
               "snapshots": {
                 "enabled": "false"
               }
@@ -77,18 +77,20 @@ jobs:
           [
             {
               "id": "OpenMRS",
+              "activation": {
+                "activeByDefault": "true"
+              },
               "properties": {
                 "archetypeCatalog": "http://mavenrepo.openmrs.org/nexus/content/repositories/public/archetype-catalog.xml",
                 "archetypeRepository": "http://mavenrepo.openmrs.org/nexus/content/repositories/public"
               },
-              "activation": {
-                "activeByDefault": "true"
-              },
-              "repositories": {
-                "id": "openmrs-repo",
-                "name": "OpenMRS Nexus Repository",
-                "url": "https://openmrs.jfrog.io/openmrs/public/"
-              }
+              "repositories": [
+                {
+                  "id": "openmrs-repo",
+                  "name": "OpenMRS Nexus Repository",
+                  "url": "https://openmrs.jfrog.io/openmrs/public/"
+                }
+              ]
             }
           ]
         plugin_groups: >
