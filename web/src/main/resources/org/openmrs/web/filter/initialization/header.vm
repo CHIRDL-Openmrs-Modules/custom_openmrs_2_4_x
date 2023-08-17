@@ -1,7 +1,6 @@
+#parse($includeTemplate)
 <html>
 <head>
-#parse($includeTemplate)
-
 <script type="text/javascript" src="initfilter/scripts/initialsetup.js"></script> 
     
 	<style type="text/css" media="all">
