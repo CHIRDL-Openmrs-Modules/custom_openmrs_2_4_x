@@ -26,6 +26,9 @@ public class InitializationWizardModel {
 	public static final String headerTemplate = "org/openmrs/web/filter/initialization/header.vm";
 	
 	// automatically given to the .vm files and used there
+	public static final String includeTemplate = "org/openmrs/web/filter/initialization/include.vm";
+	
+	// automatically given to the .vm files and used there
 	public static final String footerTemplate = "org/openmrs/web/filter/initialization/footer.vm";
 	
 	// Values for installMethod field.
